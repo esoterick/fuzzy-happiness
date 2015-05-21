@@ -1,0 +1,10 @@
+[package]
+name = "rustv"
+version = "0.1.0"
+authors = ["Robert J. Lambert III <rob@rlambert3.com>"]
+
+[dependencies.hyper]
+git = "https://github.com/hyperium/hyper.git"
+
+[dependencies.regex]
+git = "https://github.com/rust-lang/regex.git"
