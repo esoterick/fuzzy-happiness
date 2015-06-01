@@ -1,5 +1,5 @@
 [package]
-name = "rustv"
+name = "fuzzy-happiness"
 version = "0.1.0"
 authors = ["Robert J. Lambert III <rob@rlambert3.com>"]
 
@@ -8,3 +8,6 @@ git = "https://github.com/hyperium/hyper.git"
 
 [dependencies.regex]
 git = "https://github.com/rust-lang/regex.git"
+
+[dependencies.rust-sqlite]
+git = "https://github.com/dckc/rust-sqlite3.git"

@@ -1,3 +1,5 @@
+#![crate_name = "fuzzy_happiness"]
+
 extern crate hyper;
 extern crate regex;
 
@@ -7,15 +9,12 @@ use hyper::header::Connection;
 use regex::Regex;
 use std::string::String;
 
-#[derive(Debug)]
-struct Show {
-    id: i32,
-    name: String,
-}
+mod store;
+mod show;
 
 fn main() {
     let mut client = Client::new();
-    let mut show_list: Vec<Show> = Vec::new();
+    let mut show_list: Vec<show::Show> = Vec::new();
     let mut res = client.get("https://eztv.ch/")
         .header(Connection::close())
         .send().unwrap();
@@ -28,7 +27,7 @@ fn main() {
     println!("shows: {:?}", show_list);
 }
 
-fn get_shows(src: & str, shows: & mut Vec<Show>) {
+fn get_shows(src: & str, shows: & mut Vec<show::Show>) {
     let show_re = match Regex::new("<option value=\"([0-9]*)\">(.*)</option>") {
         Ok(show_re) => show_re,
         Err(err) => panic!("{}", err),
@@ -42,7 +41,7 @@ fn get_shows(src: & str, shows: & mut Vec<Show>) {
             let n: &str = cap.at(2).unwrap_or("");
             let mut nm: String = String::new();
             nm.push_str(n);
-            shows.push(Show{id: id, name: nm });
+            shows.push(show::Show{id: id, name: nm });
         }
     }
 }
