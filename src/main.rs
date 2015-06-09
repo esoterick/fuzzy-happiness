@@ -1,15 +1,17 @@
 #![crate_name = "fuzzy_happiness"]
+#![crate_type = "bin"]
+#![allow(dead_code)]
 
 extern crate hyper;
 extern crate regex;
+extern crate sqlite3;
 
-use std::io::Read;
 use hyper::Client;
 use hyper::header::Connection;
 use regex::Regex;
+use std::io::Read;
 use std::string::String;
 
-mod store;
 mod show;
 
 fn main() {
@@ -21,10 +23,13 @@ fn main() {
 
     let mut body = String::new();
     res.read_to_string(&mut body).unwrap();
-
     get_shows(& body, & mut show_list);
 
-    println!("shows: {:?}", show_list);
+    // println!("shows: {:?}", show_list);
+    // let redisTest = store::fetch_an_integer();
+    // println!("int: {:?}", redisTest);
+
+    cache_shows(&show_list);
 }
 
 fn get_shows(src: & str, shows: & mut Vec<show::Show>) {
@@ -41,7 +46,15 @@ fn get_shows(src: & str, shows: & mut Vec<show::Show>) {
             let n: &str = cap.at(2).unwrap_or("");
             let mut nm: String = String::new();
             nm.push_str(n);
-            shows.push(show::Show{id: id, name: nm });
+            // shows.push(show::Show{id: id, name: nm });
         }
     }
+}
+
+fn cache_shows(shows: & Vec<show::Show>) {
+    for show in shows {
+        println!("show {:?}", show);
+    }
+    let mut s = show::Show::new("/tmp/show.db".to_string());
+    // store::do_something();
 }

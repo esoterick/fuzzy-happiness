@@ -9,5 +9,5 @@ git = "https://github.com/hyperium/hyper.git"
 [dependencies.regex]
 git = "https://github.com/rust-lang/regex.git"
 
-[dependencies.rust-sqlite]
-git = "https://github.com/dckc/rust-sqlite3.git"
+[dependencies.sqlite3]
+git = "https://github.com/linuxfood/rustsqlite"
